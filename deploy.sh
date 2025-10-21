@@ -1,5 +1,35 @@
 #!/bin/bash
 
+# Logging to timestamped file
+LOG_FILE="deploy_$(date +%Y%m%d).log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+# Exit codes
+SUCCESS=0
+INVALID_INPUT=1
+SSH_FAILED=2
+GIT_FAILED=3
+DOCKER_FAILED=4
+NGINX_FAILED=5
+
+# Error handling with trap
+handle_error() {
+    echo "DEPLOYMENT FAILED at line $1"
+    echo "Check log file: $LOG_FILE"
+    exit $SSH_FAILED
+}
+trap 'handle_error $LINENO' ERR
+
+# Cleanup function
+cleanup() {
+    echo "Cleaning up temporary files..."
+    rm -rf "$TEMP_DIR" 2>/dev/null || true
+}
+trap cleanup EXIT
+# ===========================================================
+
+echo "=== HNG Stage 1 Deployment Started: $(date) ==="
+
 # Parameters from user input
 echo "Please enter the following details"
 read -p "Git Repository URL: " git_url
