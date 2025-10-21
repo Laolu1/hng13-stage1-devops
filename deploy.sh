@@ -98,7 +98,7 @@ ssh -i $ssh_key $server_user@$server_ip "
 
 # Configure Nginx as a Reverse Proxy
 echo "Configuring Nginx reverse proxy..."
-echo "🔧 Configuring Nginx reverse proxy..."
+echo "Configuring Nginx reverse proxy..."
 
 ssh -i $ssh_key $server_user@$server_ip "
     # Create Nginx configuration
