@@ -43,7 +43,7 @@ else
     exit 1
 fi
 cd ..
-echo "✅ Code downloaded successfully!"
+echo "Code downloaded successfully!"
 
 # SSH into Remote Server 
 echo "Setting up Server..."
